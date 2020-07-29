@@ -45,4 +45,5 @@ function Carousel({
     </VideoCardGroupContainer>
   );
 }
+
 export default Carousel;
