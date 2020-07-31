@@ -31,7 +31,9 @@ function CadastroCategoria() {
   }
 
   useEffect(() => {
-    const URL = 'http://localhost:8080/categorias';
+    const URL = window.location.hostname.includes('localhost')
+      ? 'http://localhost:3000/categorias'
+      : 'https://cassinoflix.herokuapp.com/';
     fetch(URL).then(async (respostaServidor) => {
       const resposta = await respostaServidor.json();
       setCategoria([
@@ -112,11 +114,11 @@ function CadastroCategoria() {
         </Button>
       </form>
 
-      {categorias.lenght === 0 && (
+      {/* {categorias.lenght === 0 && (
         <div>
           Loading...
         </div>
-      )}
+      )} */}
 
       <ul>
         {categorias.map((categorias) => (

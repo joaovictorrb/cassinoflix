@@ -13,9 +13,8 @@ const WrapperFormField = styled.div`
   }
 `;
 
-const Label = styled.label`
+const Label = styled.label``;
 
-`;
 Label.Text = styled.span`
   color: #E5E5E5;
   height: 57px;
@@ -58,42 +57,40 @@ const Input = styled.input`
     border-bottom-color: var(--primary);
   }
 
-  &:focus:not([type="color"]) + span{
+  &:focus:not([type="color"]) + ${Label.Text}{
     transform: scale(.6) translateY(-10px);
   }  
 
-  ${({ hasValue }) => hasValue && css`
-    &:focus:not([type="color"]) + span{
+  ${({ value }) => {
+    const hasValue = value.lenght > 0;
+    return hasValue && css`
+    &::not([type='color']) + ${Label.Text} {
       transform: scale(.6) translateY(-10px);
     }
-  `}
+   `;
+  }}
 `;
 
 function FormField({
   // eslint-disable-next-line react/prop-types
   label, type, name, value, onChange,
 }) {
-  const fieldId = `id_${name}`;
   // if type === textarea do textarea else do input
   // const tag = type === 'textarea' ? 'textarea' : 'input';
 
   const isTypeTextArea = type === 'textarea';
   const tag = isTypeTextArea ? 'textarea' : 'input';
 
-  const hasValue = Boolean(value.lenght);
+  // const hasValue = Boolean(value.lenght);
 
   return (
     <WrapperFormField>
-      <Label
-        htmlFor={fieldId}
-      >
+      <Label>
         <Input
           as={tag}
-          id={fieldId}
           type={type}
           name={name}
           value={value}
-          hasValue={hasValue}
           onChange={onChange}
         />
         <Label.Text>
@@ -108,7 +105,6 @@ function FormField({
 FormField.defaultProps = {
   type: 'text',
   value: '',
-  onChange: () => {},
 };
 
 FormField.prototype = {
@@ -116,7 +112,7 @@ FormField.prototype = {
   type: PropTypes.string,
   name: PropTypes.string.isRequired,
   value: PropTypes.string,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default FormField;
